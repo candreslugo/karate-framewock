@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    //maven {url https://artifactory.apps.bancolombia.com/maven-bancolombia'}
+}
+
+ext {
+    karateVersion= '1.2.0'
+    cucumberReportVersion= '5.7.1'
+}
+
+dependencies {
+    implementation 'org.mockito:mockito-all:1.10.19'
+    implementation 'com.pacificwebconsulting.assertion:assertion-microservice:1.0.5'
+    implementation 'org.assertj:assertj-core:3.23.1'
+    implementation 'org.junit:junit-bom:5.8.2'
+    implementation 'org.mockito:mockito-core:4.6.1'
+    testImplementation "com.intuit.karate:karate-junit5:${karateVersion}"
+    testImplementation "net.masterthought:cucumber-reporting:${cucumberReportVersion}"
+}
+
+test {
+    useJUnitPlatform()
+    systemProperty "karate.otions",System.properties.getProperty("karate.options")
+    systemProperty "karate.env",System.properties.getProperty("karate.env")
+    outputs.upToDateWhen {false}
+}
